@@ -44,9 +44,12 @@ keystone.set('500', function(err, req, res, next) {
   return ApiError.common(err, res)
 });
 
+keystone.set('cors allow origin', true);
 // Setup Route Bindings
 exports = module.exports = function (app) {
   // Api
+  app.all('/api*', keystone.middleware.cors);
+
   app.get('/api/v1/text_field', routes.api.textfield.list);
   app.get('/api/v1/text_field/:id', routes.api.textfield.get);
 
